@@ -1,4 +1,4 @@
-module github.com/skvoch/reter
+module github.com/Stigie/reter
 
 go 1.15
 
