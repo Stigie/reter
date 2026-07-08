@@ -3,14 +3,14 @@ package scheduler
 import (
 	"bou.ke/monkey"
 	"context"
-	"github.com/skvoch/reter/scheduler/logger/zerologadapter"
+	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 	"sync"
 	"testing"
 	"time"
 
+	"github.com/Stigie/reter/scheduler/builder"
+	"github.com/Stigie/reter/scheduler/models"
 	"github.com/rs/zerolog/log"
-	"github.com/skvoch/reter/scheduler/builder"
-	"github.com/skvoch/reter/scheduler/models"
 	"github.com/stretchr/testify/assert"
 )
 

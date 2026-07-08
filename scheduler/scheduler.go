@@ -8,13 +8,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/skvoch/reter/scheduler/logger"
+	"github.com/Stigie/reter/scheduler/logger"
 	etcd "go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
 
+	"github.com/Stigie/reter/scheduler/builder"
+	"github.com/Stigie/reter/scheduler/models"
 	"github.com/skvoch/go-etcd-lock/v5/lock"
-	"github.com/skvoch/reter/scheduler/builder"
-	"github.com/skvoch/reter/scheduler/models"
 )
 
 var (
