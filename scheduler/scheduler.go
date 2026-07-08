@@ -26,6 +26,7 @@ type EtcdOptions struct {
 	Endpoints   []string
 	Login       string
 	Password    string
+	Token       string
 	LogWarnings bool
 }
 
@@ -49,10 +50,11 @@ func New(logger logger.Logger, opts *Options) (Scheduler, error) {
 
 	client, err := etcd.New(etcd.Config{
 		Endpoints: opts.Etcd.Endpoints,
+		TLS:       opts.TLS,
 		Username:  opts.Etcd.Login,
 		Password:  opts.Etcd.Password,
+		Token:     opts.Etcd.Token,
 		LogConfig: &zapConfig,
-		TLS:       opts.TLS,
 	})
 
 	if err != nil {

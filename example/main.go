@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/rs/zerolog/log"
 	"github.com/Stigie/reter/scheduler"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/sync/errgroup"
 )
 
