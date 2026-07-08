@@ -24,6 +24,8 @@ var (
 
 type EtcdOptions struct {
 	Endpoints   []string
+	Login       string
+	Password    string
 	LogWarnings bool
 }
 
@@ -31,7 +33,7 @@ type Options struct {
 	Etcd    EtcdOptions
 	LockTTL time.Duration
 	Timeout time.Duration
-	TLS *tls.Config
+	TLS     *tls.Config
 }
 
 type Scheduler interface {
@@ -47,8 +49,10 @@ func New(logger logger.Logger, opts *Options) (Scheduler, error) {
 
 	client, err := etcd.New(etcd.Config{
 		Endpoints: opts.Etcd.Endpoints,
+		Username:  opts.Etcd.Login,
+		Password:  opts.Etcd.Password,
 		LogConfig: &zapConfig,
-		TLS: opts.TLS,
+		TLS:       opts.TLS,
 	})
 
 	if err != nil {
