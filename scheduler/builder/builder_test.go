@@ -2,12 +2,12 @@ package builder
 
 import (
 	"context"
-	"github.com/skvoch/reter/scheduler/models"
+	"github.com/Stigie/reter/scheduler/models"
 	"testing"
 	"time"
 
+	m "github.com/Stigie/reter/scheduler/builder/mock"
 	"github.com/golang/mock/gomock"
-	m "github.com/skvoch/reter/scheduler/builder/mock"
 	"github.com/stretchr/testify/assert"
 )
 

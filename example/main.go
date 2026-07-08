@@ -4,14 +4,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/skvoch/reter/scheduler/logger/zerologadapter"
+	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/skvoch/reter/scheduler"
+	"github.com/Stigie/reter/scheduler"
 	"golang.org/x/sync/errgroup"
 )
 
