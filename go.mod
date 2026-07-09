@@ -179,6 +179,7 @@ require (
 	github.com/OneOfOne/xxhash v1.2.2 // indirect
 	github.com/Shopify/sarama v1.19.0 // indirect
 	github.com/Shopify/toxiproxy v2.1.4+incompatible // indirect
+	github.com/Stigie/go-etcd-lock/v5 v5.0.14 // indirect
 	github.com/VividCortex/gohistogram v1.0.0 // indirect
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5 // indirect
 	github.com/ajstarks/deck v0.0.0-20200831202436-30c9fc6549a9 // indirect
