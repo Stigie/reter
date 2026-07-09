@@ -204,17 +204,17 @@ func (i *impl) handler(ctx context.Context, task models.Task) error {
 		err error
 		l   lock.Lock
 	)
-	lastActionTime, err := i.getLastActionTime(i.contextWithTimeout(ctx), task.Name)
+	lastActionTime, err := i.getLastActionTime(i.contextWithTimeout(ctx), task.NameWithPrefix())
 	if err != nil {
 		return fmt.Errorf("failed to get last action time: %w", err)
 	}
 
 	if !i.isTimeSinceLastActionGreaterInterval(lastActionTime, task.Interval) {
-		i.logger.Log(ctx, logger.LogLevelDebug, "time since last action less than interval", map[string]interface{}{"task_name": task.Name})
+		i.logger.Log(ctx, logger.LogLevelDebug, "time since last action less than interval", map[string]interface{}{"task_name": task})
 		return nil
 	}
 
-	if l, err = i.locker.Acquire(i.contextWithTimeout(ctx), task.Name, int(i.opts.LockTTL.Seconds())); err != nil {
+	if l, err = i.locker.Acquire(i.contextWithTimeout(ctx), task.NameWithPrefix(), int(i.opts.LockTTL.Seconds())); err != nil {
 		if errors.Is(err, &lock.ErrAlreadyLocked{}) {
 			i.logger.Log(ctx, logger.LogLevelDebug, "task already locked", map[string]interface{}{"task_name": task.Name})
 			return nil
@@ -226,7 +226,7 @@ func (i *impl) handler(ctx context.Context, task models.Task) error {
 
 	task.Handler()
 
-	if err := i.setLastActionTime(i.contextWithTimeout(ctx), task.Name, time.Now()); err != nil {
+	if err := i.setLastActionTime(i.contextWithTimeout(ctx), task.NameWithPrefix(), time.Now()); err != nil {
 		return fmt.Errorf("failed to set last action time: %w", err)
 	}
 
