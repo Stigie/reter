@@ -210,7 +210,7 @@ func (i *impl) handler(ctx context.Context, task models.Task) error {
 	}
 
 	if !i.isTimeSinceLastActionGreaterInterval(lastActionTime, task.Interval) {
-		i.logger.Log(ctx, logger.LogLevelDebug, "time since last action less than interval", map[string]interface{}{"task_name": task})
+		i.logger.Log(ctx, logger.LogLevelDebug, "time since last action less than interval", map[string]interface{}{"task_name": task.Name})
 		return nil
 	}
 
