@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Stigie/reter/scheduler/models"
 	"time"
+
+	"github.com/Stigie/reter/scheduler/models"
 )
 
 var (
@@ -18,14 +19,16 @@ type Runner interface {
 	Run(ctx context.Context, task models.Task) error
 }
 
-func New(runner Runner, count uint) *Builder {
+func New(runner Runner, count uint, prefix string) *Builder {
 	return &Builder{
+		prefix: prefix,
 		count:  count,
 		runner: runner,
 	}
 }
 
 type Builder struct {
+	prefix   string
 	count    uint
 	timeStr  string
 	interval time.Duration
@@ -81,6 +84,7 @@ func (d *Do) Do(ctx context.Context, name string, handler func()) error {
 		Interval:   d.builder.interval,
 		Name:       name,
 		TickerType: d.builder.tickerType,
+		Prefix:     d.builder.prefix,
 	}
 
 	if task.Name == "" {

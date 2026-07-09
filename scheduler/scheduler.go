@@ -27,6 +27,7 @@ type EtcdOptions struct {
 	Login       string
 	Password    string
 	Token       string
+	Prefix      string
 	LogWarnings bool
 }
 
@@ -68,6 +69,8 @@ func New(logger logger.Logger, opts *Options) (Scheduler, error) {
 		tasksMx: &sync.Mutex{},
 		etcd:    client,
 		locker:  lock.NewEtcdLocker(client, lock.WithMaxTryLockTimeout(opts.Timeout)),
+
+		etcdPrefix: opts.Etcd.Prefix,
 	}, nil
 }
 
@@ -76,9 +79,10 @@ type impl struct {
 	tasks   map[string]interface{}
 	opts    *Options
 
-	locker lock.Locker
-	logger logger.Logger
-	etcd   *etcd.Client
+	locker     lock.Locker
+	logger     logger.Logger
+	etcd       *etcd.Client
+	etcdPrefix string
 }
 
 func (i *impl) Every(inputCount ...uint) *builder.Builder {
@@ -88,7 +92,7 @@ func (i *impl) Every(inputCount ...uint) *builder.Builder {
 		count = inputCount[0]
 	}
 
-	return builder.New(i, count)
+	return builder.New(i, count, i.etcdPrefix)
 }
 
 func (i *impl) Run(ctx context.Context, task models.Task) error {

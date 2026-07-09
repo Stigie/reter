@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 
 	"github.com/Stigie/reter/scheduler"
 	"github.com/rs/zerolog/log"
