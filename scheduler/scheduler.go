@@ -12,9 +12,9 @@ import (
 	etcd "go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
 
+	"github.com/Stigie/go-etcd-lock/v5/lock"
 	"github.com/Stigie/reter/scheduler/builder"
 	"github.com/Stigie/reter/scheduler/models"
-	"github.com/skvoch/go-etcd-lock/v5/lock"
 )
 
 var (
@@ -252,7 +252,7 @@ func (i *impl) isTimeSinceLastActionGreaterInterval(lastActionTime *time.Time, i
 }
 
 func (i *impl) getLastActionTime(ctx context.Context, taskName string) (*time.Time, error) {
-	res, err := i.etcd.Get(ctx, taskName)
+	res, err := i.etcd.Get(ctx, taskName, etcd.WithPrefix())
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +267,7 @@ func (i *impl) getLastActionTime(ctx context.Context, taskName string) (*time.Ti
 }
 
 func (i *impl) setLastActionTime(ctx context.Context, taskName string, t time.Time) error {
-	if _, err := i.etcd.Put(ctx, taskName, t.Format(time.RFC3339)); err != nil {
+	if _, err := i.etcd.Put(ctx, taskName, t.Format(time.RFC3339), etcd.WithPrefix()); err != nil {
 		return fmt.Errorf("failed to set last action time: %w", err)
 	}
 	return nil
