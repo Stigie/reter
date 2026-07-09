@@ -2,9 +2,10 @@ package builder
 
 import (
 	"context"
-	"github.com/Stigie/reter/scheduler/models"
 	"testing"
 	"time"
+
+	"github.com/Stigie/reter/scheduler/models"
 
 	m "github.com/Stigie/reter/scheduler/builder/mock"
 	"github.com/golang/mock/gomock"
@@ -28,7 +29,7 @@ func TestBuilding(t *testing.T) {
 					TickerType: models.TickerInterval,
 				})
 
-				builder := New(runner, 10)
+				builder := New(runner, 10, "")
 				return builder.Seconds().Do(context.Background(), "func", nil)
 			},
 		},
@@ -44,7 +45,7 @@ func TestBuilding(t *testing.T) {
 					TickerType: models.TickerInterval,
 				})
 
-				builder := New(runner, 10)
+				builder := New(runner, 10, "")
 				return builder.Minute().Do(context.Background(), "func", nil)
 			},
 		},
@@ -60,7 +61,7 @@ func TestBuilding(t *testing.T) {
 					TickerType: models.TickerInterval,
 				})
 
-				builder := New(runner, 10)
+				builder := New(runner, 10, "")
 				return builder.Interval(time.Minute*10).Do(context.Background(), "func", nil)
 			},
 		},
@@ -78,7 +79,7 @@ func TestBuilding(t *testing.T) {
 					TickerType: models.TickerTime,
 				})
 
-				builder := New(runner, 10)
+				builder := New(runner, 10, "")
 				return builder.time("22-15-30").Do(context.Background(), "func", nil)
 			},
 		},
@@ -104,7 +105,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 10)
+				builder := New(runner, 10, "")
 				return builder.Seconds().Do(context.Background(), "", func() {})
 			},
 			Error: ErrEmptyTaskName,
@@ -115,7 +116,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 0)
+				builder := New(runner, 0, "")
 				return builder.Seconds().Do(context.Background(), "task", func() {})
 			},
 			Error: ErrTaskIntervalIsZero,
@@ -126,7 +127,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 0)
+				builder := New(runner, 0, "")
 				return builder.time("rude-invalid-string").Do(context.Background(), "task", func() {})
 			},
 			Error: ErrInvalidTimeFormat,
@@ -137,7 +138,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 0)
+				builder := New(runner, 0, "")
 				return builder.time("24-68-00").Do(context.Background(), "task", func() {})
 			},
 			Error: ErrInvalidTimeFormat,
@@ -148,7 +149,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 0)
+				builder := New(runner, 0, "")
 				return builder.time("25-00-00").Do(context.Background(), "task", func() {})
 			},
 			Error: ErrInvalidTimeFormat,
@@ -159,7 +160,7 @@ func TestIncorrectInputs(t *testing.T) {
 				controller := gomock.NewController(t)
 				runner := m.NewMockRunner(controller)
 
-				builder := New(runner, 0)
+				builder := New(runner, 0, "")
 				return builder.time("23-00-88").Do(context.Background(), "task", func() {})
 			},
 			Error: ErrInvalidTimeFormat,

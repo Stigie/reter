@@ -1,12 +1,13 @@
 package scheduler
 
 import (
-	"bou.ke/monkey"
 	"context"
-	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 	"sync"
 	"testing"
 	"time"
+
+	"bou.ke/monkey"
+	"github.com/Stigie/reter/scheduler/logger/zerologadapter"
 
 	"github.com/Stigie/reter/scheduler/builder"
 	"github.com/Stigie/reter/scheduler/models"
